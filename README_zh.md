@@ -1,5 +1,7 @@
 # MOSS-Audio
 
+Get Going Fast edition: a Windows-ready build with local install and run scripts at the repo root.
+
 
 <p align="center">
   <img src="./assets/moss-audio-logo.png" width="55%" />
