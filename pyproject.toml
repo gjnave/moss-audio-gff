@@ -8,7 +8,8 @@ version = "0.1.0"
 description = "MOSS-Audio: Open-source audio understanding model"
 readme = "README.md"
 requires-python = ">=3.10"
-license = { file = "LICENSE" }
+license = "Apache-2.0"
+license-files = ["LICENSE"]
 authors = [{ name = "OpenMOSS Team" }]
 dependencies = [
   "safetensors>=0.4.0",
