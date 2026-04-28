@@ -659,7 +659,7 @@ def batch_process_stream(
         raise gr.Error(f"Batch processing failed.\n{exc}") from exc
 
 
-with gr.Blocks(title=TITLE, theme=gr.themes.Soft(), css=CUSTOM_CSS) as demo:
+with gr.Blocks(title=TITLE) as demo:
     gr.Markdown(HERO_MARKDOWN)
 
     with gr.Row():
@@ -823,5 +823,7 @@ if __name__ == "__main__":
     demo.queue(max_size=8).launch(
         server_name=server_name,
         server_port=server_port,
+        theme=gr.themes.Soft(),
+        css=CUSTOM_CSS,
         inbrowser=True,
     )
