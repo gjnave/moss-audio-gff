@@ -3,8 +3,19 @@
   <a href="https://getgoingfast.pro"><img src="https://www.cognibuild.ai/wp-content/uploads/2024/09/new.webp" style="margin-right: 5px;"></a>
   <a href="https://getgoingfast.pro">Get Going Fast</a>
 </div>
+<div align="center" style="margin-top: 8px;">
+  <a href="https://mossaudio.getgoingfast.pro">Buy the Quick Installer</a>
+</div>
 <br/>
 <br/>
+
+Key Features
+- Audio and video file processing
+- Batch captioning
+- YouTube URL captioning
+- File chunking for large recordings
+- Caption export for LoRA training
+- Sound event and music analysis
 
 Installation instructions:
 1. `git clone https://github.com/gjnave/moss-audio-gff.git`
