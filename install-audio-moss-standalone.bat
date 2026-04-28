@@ -37,7 +37,14 @@ if errorlevel 1 exit /b 1
 python -m pip install --upgrade pip
 if errorlevel 1 exit /b 1
 
-if not exist "%FFMPEG_BIN%\ffmpeg.exe" (
+if exist "%FFMPEG_BIN%\ffmpeg.exe" (
+  echo Portable ffmpeg already installed.
+) else (
+  if exist "%FFMPEG_ZIP%" del /q "%FFMPEG_ZIP%"
+  for /d %%D in ("%DOWNLOADS_DIR%\ffmpeg-*") do (
+    if exist "%%~fD" rmdir /s /q "%%~fD"
+  )
+
   echo Downloading portable ffmpeg...
   curl -L -o "%FFMPEG_ZIP%" "https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.zip"
   if errorlevel 1 exit /b 1
