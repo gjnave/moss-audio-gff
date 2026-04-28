@@ -65,7 +65,7 @@ if exist "%FFMPEG_BIN%\ffmpeg.exe" (
   )
 
   if exist "%FFMPEG_DIR%" rmdir /s /q "%FFMPEG_DIR%"
-  move "%FFMPEG_SOURCE%" "%FFMPEG_DIR%"
+  move "!FFMPEG_SOURCE!" "%FFMPEG_DIR%"
   if errorlevel 1 exit /b 1
 )
 
