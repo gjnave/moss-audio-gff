@@ -14,14 +14,20 @@ import gradio as gr
 
 from src.hf_inference import MossAudioHFInference, read_env_model_id, resolve_device
 
-TITLE = "Get Going Fast"
-SUBTITLE = "MOSS-Audio Fast Track"
+TITLE = "MOSS Audio Captioning"
+SUBTITLE = "Upload media, transcribe it, and prepare clean caption outputs."
 BRAND_LINK = "https://getgoingfast.pro"
 CONTACT_MARKDOWN = (
     "[getgoingfast.pro](https://getgoingfast.pro) | "
     "[cognibuild.ai](https://www.cognibuild.ai) | "
     "[patreon.com/cognibuild](https://www.patreon.com/cognibuild) | "
     "[youtube.com/@cognibuild](https://www.youtube.com/@cognibuild)"
+)
+CONTACT_HTML = (
+    '<a href="https://getgoingfast.pro" target="_blank" rel="noopener noreferrer">getgoingfast.pro</a> | '
+    '<a href="https://www.cognibuild.ai" target="_blank" rel="noopener noreferrer">cognibuild.ai</a> | '
+    '<a href="https://www.patreon.com/cognibuild" target="_blank" rel="noopener noreferrer">patreon.com/cognibuild</a> | '
+    '<a href="https://www.youtube.com/@cognibuild" target="_blank" rel="noopener noreferrer">youtube.com/@cognibuild</a>'
 )
 
 DEFAULT_QUESTION = "Describe this audio."
@@ -45,6 +51,173 @@ MEDIA_EXTENSIONS = {
     ".webm",
 }
 OUTPUTS_DIR = Path(__file__).resolve().parent / "outputs"
+
+CUSTOM_CSS = """
+:root {
+  --app-bg: #0f1318;
+  --app-surface: rgba(22, 28, 35, 0.82);
+  --app-surface-2: rgba(27, 34, 43, 0.92);
+  --app-line: rgba(210, 221, 233, 0.10);
+  --app-line-strong: rgba(210, 221, 233, 0.18);
+  --app-text: #ecf1f6;
+  --app-muted: #aab7c4;
+  --app-accent: #5bb7b0;
+  --app-accent-deep: #1f7b78;
+  --app-shadow: 0 24px 80px rgba(0, 0, 0, 0.36);
+  --app-radius: 22px;
+}
+
+html, body, .gradio-container {
+  background:
+    radial-gradient(circle at top left, rgba(91, 183, 176, 0.14), transparent 24%),
+    radial-gradient(circle at top right, rgba(200, 155, 97, 0.10), transparent 22%),
+    linear-gradient(180deg, #0b0f14 0%, #10161d 50%, #0f1318 100%) !important;
+  color: var(--app-text) !important;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+}
+
+.gradio-container {
+  max-width: 1360px !important;
+  padding-top: 14px !important;
+}
+
+h1, h2, h3, h4, .brand-title {
+  font-family: Georgia, "Times New Roman", serif !important;
+  letter-spacing: -0.025em;
+  color: var(--app-text) !important;
+}
+
+.app-hero-shell {
+  position: relative;
+  padding: 18px 22px;
+  border-radius: 28px;
+  background: linear-gradient(180deg, rgba(23, 30, 38, 0.92), rgba(16, 21, 27, 0.96));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: var(--app-shadow);
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.app-hero-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 15% 0%, rgba(91, 183, 176, 0.10), transparent 30%),
+    radial-gradient(circle at 100% 0%, rgba(200, 155, 97, 0.08), transparent 24%);
+  pointer-events: none;
+}
+
+.app-hero-main {
+  position: relative;
+  z-index: 1;
+  padding: 8px 2px;
+}
+
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: rgba(91, 183, 176, 0.10);
+  border: 1px solid rgba(91, 183, 176, 0.16);
+  color: #a7e4df;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.brand-title {
+  margin: 12px 0 8px;
+  font-size: clamp(2.1rem, 3.4vw, 3.8rem);
+  line-height: 0.96;
+}
+
+.brand-subtitle {
+  max-width: 68ch;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--app-muted);
+  margin: 0;
+}
+
+.contact-line {
+  margin: 10px 0 0;
+  color: var(--app-muted);
+  font-size: 0.95rem;
+}
+
+.block, .gr-box, .gr-panel, .gr-group, .gr-form, .gradio-group, .gr-accordion {
+  border-radius: var(--app-radius) !important;
+}
+
+.gr-box, .gr-panel, .gr-group, .gr-form, .gradio-group, .gr-accordion {
+  background: var(--app-surface) !important;
+  border: 1px solid var(--app-line) !important;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18) !important;
+}
+
+.gradio-container .prose,
+.gradio-container .prose p,
+.gradio-container .prose li,
+.gradio-container .prose strong,
+label,
+.gr-label {
+  color: var(--app-text) !important;
+}
+
+.gradio-container .prose a,
+.gr-markdown a,
+a {
+  color: #8edbd5 !important;
+}
+
+input, textarea, .gr-textbox input, .gr-textbox textarea {
+  border-radius: 16px !important;
+  background: var(--app-surface-2) !important;
+  color: var(--app-text) !important;
+  border: 1px solid var(--app-line-strong) !important;
+}
+
+textarea::placeholder,
+input::placeholder {
+  color: #8ea0b1 !important;
+}
+
+button.primary, .gr-button-primary, button[variant="primary"] {
+  background: linear-gradient(135deg, var(--app-accent), var(--app-accent-deep)) !important;
+  color: #081012 !important;
+  border: none !important;
+  box-shadow: 0 10px 24px rgba(91, 183, 176, 0.22) !important;
+}
+
+button.secondary, .gr-button-secondary {
+  background: rgba(255,255,255,0.04) !important;
+  color: var(--app-text) !important;
+  border: 1px solid var(--app-line-strong) !important;
+}
+
+footer {
+  display: none !important;
+}
+
+@media (max-width: 980px) {
+  .app-hero-shell { padding: 16px 18px; border-radius: 24px; }
+}
+"""
+
+HERO_MARKDOWN = f"""
+<div class="app-hero-shell">
+  <section class="app-hero-main">
+    <div class="kicker">CogniBuild AI</div>
+    <div class="brand-title">{TITLE}</div>
+    <p class="brand-subtitle">{SUBTITLE}</p>
+    <p class="contact-line">{CONTACT_HTML}</p>
+  </section>
+</div>
+"""
 
 
 @lru_cache(maxsize=2)
@@ -486,15 +659,8 @@ def batch_process_stream(
         raise gr.Error(f"Batch processing failed.\n{exc}") from exc
 
 
-with gr.Blocks(title=TITLE) as demo:
-    gr.Markdown(
-        f"# {TITLE}\n"
-        f"## {SUBTITLE}\n"
-        f"[{BRAND_LINK}]({BRAND_LINK})\n\n"
-        f"{CONTACT_MARKDOWN}\n\n"
-        "Upload audio, upload video, or paste a YouTube link. Long media is converted to mono 16 kHz audio and automatically chunked into 60-second segments to reduce GPU crashes and runaway processing.\n\n"
-        "For training and broad compatibility, chunk export uses normalized `wav + txt` pairs instead of saving video copies."
-    )
+with gr.Blocks(title=TITLE, theme=gr.themes.Soft(), css=CUSTOM_CSS) as demo:
+    gr.Markdown(HERO_MARKDOWN)
 
     with gr.Row():
         with gr.Column(scale=5):
