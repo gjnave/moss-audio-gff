@@ -1,10 +1,9 @@
 <h1 align="center">GET GOING FAST - MOSS Audio Captioning</h1>
 <div align="center" style="display: flex; justify-content: center; margin-top: 10px;">
   <a href="https://getgoingfast.pro"><img src="https://www.cognibuild.ai/wp-content/uploads/2024/09/new.webp" style="margin-right: 5px;"></a>
-  <a href="https://getgoingfast.pro">Get Going Fast</a>
 </div>
 <div align="center" style="margin-top: 8px;">
-  <a href="https://mossaudio.getgoingfast.pro">Buy the Quick Installer</a>
+  <a href="https://mossaudio.getgoingfast.pro">Buy the Quick Installer / Join as a Member / Get Community Assistance</a>
 </div>
 <br/>
 <br/>
