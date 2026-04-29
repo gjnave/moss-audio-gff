@@ -2,6 +2,9 @@
 setlocal EnableExtensions
 cd /d "%~dp0"
 
+IF EXIST "about.nfo" TYPE "about.nfo"
+ECHO.
+
 set "ROOT_DIR=%~dp0"
 set "VENV_DIR=%ROOT_DIR%.venv"
 set "WEIGHTS_DIR=%ROOT_DIR%weights\MOSS-Audio-4B-Instruct"
